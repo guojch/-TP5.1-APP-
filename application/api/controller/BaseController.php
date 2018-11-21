@@ -1,6 +1,6 @@
 <?php
 
-namespace app\api;
+namespace app\api\controller;
 
 use app\common\lib\IAuth;
 use app\common\lib\User;
