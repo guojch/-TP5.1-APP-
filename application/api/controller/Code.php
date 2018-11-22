@@ -6,7 +6,7 @@ use app\common\lib\Sms;
 use app\common\model\VerifyCode;
 use app\common\third\Email;
 use app\common\model\User;
-use app\common\lib\User as LibUser;
+use app\common\lib\User as UserLib;
 
 /**
  * 验证码基类
@@ -19,7 +19,10 @@ class Code extends BaseController
      * 验证码类型：
      * register_mobile - 手机号码注册
      * login_mobile - 手机号码登录
-     * find_password_mobile -
+     * find_password_mobile - 手机找回密码
+     * bind_mobile - 绑定手机
+     * bind_email - 绑定邮箱
+     * change_mobile - 更换绑定手机
      * @var array
      */
     protected static $allowAuthType = ['register_mobile', 'login_mobile', 'find_password_mobile', 'bind_mobile', 'bind_email', 'change_mobile'];
@@ -41,8 +44,8 @@ class Code extends BaseController
         }
 
         // 检测同一手机号验证码发送频率
-        $effective_code = VerifyCode::getEffectiveCode($authType, $account);
-        if ($effective_code && (time() - $effective_code->create_time) < config('api.sms_code_send_frequency')){
+        $effectiveCode = VerifyCode::getEffectiveCode($authType, $account);
+        if ($effectiveCode && (time() - $effectiveCode->create_time) < config('api.sms_code_send_frequency')){
             render_json('频繁发送验证码，请稍后再试', 0);
         }
 
@@ -63,9 +66,9 @@ class Code extends BaseController
             //更换绑定手机号码、邮箱绑定
             case 'change_mobile':
             case 'bind_email':
-                LibUser::checkLogin();
-                $is_exist = model('User')->where([['mobile|email'=>$account],['uid','<>',$this->uid]])->count();
-                if ($is_exist){
+                UserLib::checkLogin();
+                $isExist = model('User')->where([['mobile|email'=>$account],['uid','<>',$this->uid]])->count();
+                if ($isExist){
                     render_json('该号码已经被绑定，请重新输入', 0);
                 }
                 break;

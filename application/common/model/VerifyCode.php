@@ -68,4 +68,52 @@ class VerifyCode extends Model
             return false;
         }
     }
+
+    /**
+     * 修改验证码状态--成功
+     * @param $codeObj
+     * @param int $uid
+     */
+    public function toSuccess($codeObj, $uid=0){
+        $codeObj->status = self::CODE_STATUS_USE_SUCCESS;
+        $codeObj->auth_time = time();
+        $codeObj->uid = $uid;
+        $codeObj->save();
+    }
+
+    /**
+     * 验证码废弃
+     * @param $codeObj
+     */
+    public static function toDisable($codeObj){
+        $codeObj->status = self::CODE_STATUS_USE_FAILED;
+        $codeObj->save();
+    }
+
+    /**
+     * 校验验证码
+     * @param $auth_type 认证类型
+     * @param $mobile 手机号码
+     * @param $code 验证码
+     * @return array|bool|null|\PDOStatement|string|Model
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public static function checkCode($auth_type, $mobile, $code){
+        $codeObj = self::getEffectiveCode($auth_type, $mobile);
+        if ($codeObj){
+            $existTime = time() - $codeObj->create_time;
+            if ($existTime > config('api.sms_code_expire_time')){
+                self::toDisable($codeObj);
+                render_json('验证码已失效，请重新获取', 0);
+            } elseif($codeObj->code != $code){
+                render_json('验证码错误', 0);
+            }
+        } else{
+            render_json('验证码失效，请重新获取', 0);
+        }
+
+        return $codeObj;
+    }
 }
