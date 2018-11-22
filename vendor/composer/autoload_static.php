@@ -23,6 +23,7 @@ class ComposerStaticInit128f955144f68167e3564ad9045d4539
         'P' => 
         array (
             'Phinx\\' => 6,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
     );
 
@@ -42,6 +43,10 @@ class ComposerStaticInit128f955144f68167e3564ad9045d4539
         'Phinx\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-migration/phinx/src/Phinx',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
     );
 

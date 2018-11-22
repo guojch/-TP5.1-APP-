@@ -2,8 +2,6 @@
 
 namespace app\common\lib;
 
-use think\Request;
-
 /**
  * 用户基础类库
  * Class User
@@ -20,7 +18,7 @@ class User
     public static function encodeToken($userinfo, $type = 'access_token'){
         $ret = false;
         $lastLoginTime = time();
-        $lastLoginIp = Request::ip();
+        $lastLoginIp = \request()->ip();
         if ($userinfo && is_array($userinfo) && $type){
             switch ($type){
                 case 'access_token':
@@ -55,7 +53,7 @@ class User
     }
 
     public static function checkLogin(){
-        $headers = Request::header();
+        $headers = \request()->header();
         if (empty($headers['access-token'])){
             render_json('未登录，请先登录', -10086);
         }

@@ -5,7 +5,6 @@ namespace app\api\controller;
 use app\common\lib\IAuth;
 use app\common\lib\User;
 use think\Controller;
-use think\Request;
 
 class BaseController extends Controller
 {
@@ -23,7 +22,7 @@ class BaseController extends Controller
     public function checkRequestAuth(){
         // 通过header传递加密sign和客户端设备基本信息
         //（操作系统device-os，客户端版本号app-ver，系统版本os-ver，设备版本号device-ver）
-        $headers = Request::header();
+        $headers = \request()->header();
         // 参数校验
         if (empty($headers['sign'])){
             render_json('sign不存在', 0);
@@ -43,7 +42,7 @@ class BaseController extends Controller
      * 获取token中的uid
      */
     public function getUid(){
-        $headers = Request::header();
+        $headers = \request()->header();
         $accessToken = $headers['access-token'] ? : '';
         $accessToken = stripslashes($accessToken);
         $accessToken = str_replace(' ', '+', $accessToken);

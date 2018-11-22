@@ -10,4 +10,5 @@ return array(
     'think\\composer\\' => array($vendorDir . '/topthink/think-installer/src'),
     'app\\' => array($baseDir . '/application'),
     'Phinx\\' => array($vendorDir . '/topthink/think-migration/phinx/src/Phinx'),
+    'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
 );

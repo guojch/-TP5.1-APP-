@@ -15,4 +15,6 @@ return [
     'upload' => [
         'avatar' => '/uploads/avatar'
     ],
+    'sms_code_send_frequency' => 60, //短信验证码发送频率60s一次
+    'sms_code_expire_time' => 300, // 短信验证码过期时长
 ];
