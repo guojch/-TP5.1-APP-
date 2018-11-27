@@ -6,7 +6,6 @@ use app\common\lib\Sms;
 use app\common\model\VerifyCode;
 use app\common\third\Email;
 use app\common\model\User;
-use app\common\lib\User as UserLib;
 
 /**
  * 验证码基类
@@ -66,8 +65,8 @@ class Code extends BaseController
             //更换绑定手机号码、邮箱绑定
             case 'change_mobile':
             case 'bind_email':
-                UserLib::checkLogin();
-                $isExist = model('User')->where([['mobile|email'=>$account],['uid','<>',$this->uid]])->count();
+                $this->checkLogin();
+                $isExist = model('User')->where([['mobile|email','=',$account],['uid','<>',$this->uid]])->count();
                 if ($isExist){
                     render_json('该号码已经被绑定，请重新输入', 0);
                 }

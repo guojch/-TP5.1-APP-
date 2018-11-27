@@ -2,7 +2,6 @@
 
 namespace app\common\model;
 
-
 use think\Model;
 
 /**
@@ -71,14 +70,13 @@ class VerifyCode extends Model
 
     /**
      * 修改验证码状态--成功
-     * @param $codeObj
      * @param int $uid
      */
-    public function toSuccess($codeObj, $uid=0){
-        $codeObj->status = self::CODE_STATUS_USE_SUCCESS;
-        $codeObj->auth_time = time();
-        $codeObj->uid = $uid;
-        $codeObj->save();
+    public function toSuccess($uid = 0){
+        $this->status = self::CODE_STATUS_USE_SUCCESS;
+        $this->auth_time = time();
+        $this->uid = $uid;
+        $this->save();
     }
 
     /**

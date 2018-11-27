@@ -3,9 +3,11 @@
 namespace app\common\model;
 
 
+use app\common\lib\Encryption;
 use think\Db;
 use think\Model;
 use think\model\concern\SoftDelete;
+use app\common\lib\User as UserLib;
 
 /**
  * 用户基类
@@ -14,6 +16,7 @@ use think\model\concern\SoftDelete;
  */
 class User extends Model
 {
+    protected $pk = 'uid';
     use SoftDelete;
     protected $deleteTime = 'delete_time';
     protected $defaultSoftDelete = 0;
@@ -62,9 +65,88 @@ class User extends Model
         return $key;
     }
 
+    /**
+     * 生成登录密码
+     * @param $password 密码
+     * @param $secCode 安全码
+     * @return string
+     */
     public function encryPassword($password, $secCode){
         $password = preg_match('/^\w{32}$/', $password) ? $password : md5(stripslashes($password));
 
         return md5($password . md5($secCode));
+    }
+
+    /**
+     * 手机帐号登录
+     * @return bool
+     */
+    public function loginByMobile(){
+        $accessToken = UserLib::encodeToken($this->toArray());
+        $this->access_token = $accessToken;
+        $this->last_login_time = time();
+        $this->last_login_ip = request()->ip();
+
+        if ($this->save()){
+            return $accessToken;
+        } else{
+            return false;
+        }
+    }
+
+    /**
+     * 帐号登录
+     * @param $data
+     * @return bool
+     */
+    public function loginByAccount($data){
+        $data['password'] = Encryption::decode($data['password']);
+        if ($this->verifyPassword($data['password'])){
+            $accessToken = UserLib::encodeToken($this->toArray());
+            $this->access_token = $accessToken;
+            $this->last_login_time = time();
+            $this->last_login_ip = request()->ip();
+            if ($this->save()){
+                return $accessToken;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 修改密码
+     * @param $password
+     * @return bool
+     */
+    public function changePassword($password){
+        $newPassword = $this->encryPassword(md5($password), $this->sec_code);
+        if ($this->password == $newPassword){
+            render_json('不能与原密码相同', 0);
+        } else{
+            $this->password = $newPassword;
+            return $this->save();
+        }
+    }
+
+    /**
+     * 密码验证
+     * @param $password
+     * @param $sec_code
+     * @return bool
+     */
+    public function verifyPassword($password){
+        if ($this->password == $this->encryPassword($password, $this->sec_code)){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 退出登录
+     * @return bool
+     */
+    public function logout(){
+        $this->access_token = '';
+        return $this->save();
     }
 }
