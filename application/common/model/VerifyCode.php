@@ -11,6 +11,8 @@ use think\Model;
  */
 class VerifyCode extends Model
 {
+    protected $pk = 'code_id';
+
     const CODE_STATUS_UNUSED = 0; //未使用
     const CODE_STATUS_USE_SUCCESS = 1; //验证通过
     const CODE_STATUS_USE_FAILED = 2; //验证失败  或者 验证码失效

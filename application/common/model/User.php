@@ -78,10 +78,10 @@ class User extends Model
     }
 
     /**
-     * 手机帐号登录
+     * 用户快速登录
      * @return bool
      */
-    public function loginByMobile(){
+    public function loginFast(){
         $accessToken = UserLib::encodeToken($this->toArray());
         $this->access_token = $accessToken;
         $this->last_login_time = time();
@@ -148,5 +148,19 @@ class User extends Model
     public function logout(){
         $this->access_token = '';
         return $this->save();
+    }
+
+    /**
+     * 更新用户个人信息
+     * @param $data
+     * @return mixed
+     */
+    public function updateUserInfo($data){
+        if (!is_array($data)){
+            render_json('传递参数不合法', 0);
+        }
+        $this->allowField(true)->save($data);
+
+        return $this->uid;
     }
 }

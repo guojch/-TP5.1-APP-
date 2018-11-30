@@ -13,6 +13,8 @@ use think\model\concern\SoftDelete;
  */
 class File extends Model
 {
+    protected $pk = 'file_id';
+
     use SoftDelete;
     protected $deleteTime = 'delete_time';
     protected $defaultSoftDelete = 0;

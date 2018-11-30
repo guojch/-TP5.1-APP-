@@ -2,6 +2,8 @@
 
 namespace app\common\lib;
 
+use think\facade\Env;
+
 /**
  * 上传基类
  * Class Upload
@@ -41,7 +43,7 @@ class Upload
         }
 
         $hashKey = md5(file_get_contents($filePath));
-        $uploadDirPath = ROOT_PATH.'/public';
+        $uploadDirPath = Env::get('root_path').'/public';
         $folderName = $uploadConfig[$bucket].'/'.date('Ymd', strtotime($now));
         $uploadDir = $uploadDirPath.$folderName;
 

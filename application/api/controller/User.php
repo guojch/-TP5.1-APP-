@@ -2,6 +2,7 @@
 
 namespace app\api\controller;
 
+use app\common\lib\Upload;
 use app\common\model\User as UserModel;
 use app\common\model\VerifyCode;
 
@@ -59,7 +60,7 @@ class User extends BaseController
             render_json('您输入的帐号不存在，请重新输入', 0);
         }
         //登录操作
-        $accessToken = $userObj->loginByMobile();
+        $accessToken = $userObj->loginFast();
         if ($accessToken){
             $codeObj->toSuccess($userObj->uid);
             render_json('登录成功', 1, array(
@@ -99,6 +100,7 @@ class User extends BaseController
      * 忘记密码
      */
     public function forgetLoginPassword(){
+        $authType = 'find_password_mobile';
         $data = input('post.');
         $result = $this->validate($data, 'ForgetLoginPassword');
         if ($result !== true){
@@ -108,7 +110,7 @@ class User extends BaseController
             render_json('两次输入密码不一致，请重新输入', 0);
         }
         //验证码校验
-        $codeObj = VerifyCode::checkCode('find_password_mobile', $data['mobile'], $data['code']);
+        $codeObj = VerifyCode::checkCode($authType, $data['mobile'], $data['code']);
         //判断用户是否存在
         $userObj = UserModel::getByMobile($data['mobile']);
         if (!$userObj){
@@ -194,6 +196,34 @@ class User extends BaseController
     }
 
     /**
+     * 绑定邮箱
+     */
+    public function bindEmail(){
+        $this->checkLogin();
+        $uid = $this->uid;
+        $authType = 'bind_email';
+        $data = input('post.');
+        $result = $this->validate($data, 'BindEmail');
+        if ($result !== true){
+            render_json($result, 0);
+        }
+        //验证码校验
+        $codeObj = VerifyCode::checkCode($authType, $data['email'], $data['code']);
+        $isExist = model('User')->where([['email','=',$data['email']],['uid','<>',$uid]])->count();
+        if ($isExist){
+            render_json('该邮箱已被其他账号绑定', 0);
+        }
+        //绑定操作
+        try {
+            model('User')->where('uid', $uid)->update(['email'=>$data['email']]);
+            $codeObj->toSuccess($uid);
+        } catch (\Exception $e){
+            render_json('邮箱绑定失败', 0);
+        }
+        render_json('邮箱绑定成功', 1);
+    }
+
+    /**
      * 退出登录
      */
     public function logout(){
@@ -203,5 +233,58 @@ class User extends BaseController
             render_json('用户已注销', 1);
         }
         render_json('未知错误', 0);
+    }
+
+    /**
+     * 获取用户信息
+     */
+    public function getUserInfo(){
+        $this->checkLogin();
+        $uid = $this->uid;
+        $userinfo = UserModel::get($uid);
+        $userinfo = $userinfo->toArray();
+        $info = array();
+        //头像
+        $avatar = $userinfo['avatar'];
+        if ($avatar){
+            $info['avatar'] = get_pic($avatar);
+        } else{
+            $info['avatar'] = 'http://' . $_SERVER['HTTP_HOST'] . '/static/images/head_img.png';
+        }
+        $info['mobile'] = $userinfo['mobile'] ? : '';
+        $info['email'] = $userinfo['email'] ? : '';
+        $info['username'] = $userinfo['username'] ? : '';
+
+        render_json('获取成功', 1, $info);
+    }
+
+    /**
+     * 更新用户信息
+     */
+    public function updateInfo(){
+        $this->checkLogin();
+        $uid = $this->uid;
+        $data = input('post.');
+        $isExist = model('User')->where([['username','=',$data['username']],['uid','<>',$uid]])->count();
+        if ($isExist){
+            render_json('用户名已存在', 0);
+        }
+        //获取用户信息
+        $userObj = UserModel::get($uid);
+        if (!$userObj){
+            render_json('账号存在异常', 0);
+        }
+        //上传头像
+        if (request()->file('avatar')){
+            $data['avatar'] = Upload::uploadByFile('avatar', 'avatar');
+        }
+        //修改操作
+        $data['uid'] = $uid;
+        try {
+            $userObj->updateUserInfo($data);
+        } catch (\Exception $e){
+            render_json('保存失败', 0);
+        }
+        render_json('保存成功', 1);
     }
 }
