@@ -1,16 +1,16 @@
 <?php
 
-namespace app\common\lib;
+namespace app\common\third;
 
 ini_set("display_errors", "on");
-
-require_once Env::get('root_path') . 'extend/aliyun-dysms-php-sdk/api_sdk/vendor/autoload.php';
 
 use Aliyun\Core\Config;
 use Aliyun\Core\Profile\DefaultProfile;
 use Aliyun\Core\DefaultAcsClient;
 use Aliyun\Api\Sms\Request\V20170525\SendSmsRequest;
 use think\facade\Env;
+
+require_once Env::get('root_path') . 'extend/aliyun-dysms-php-sdk/api_sdk/vendor/autoload.php';
 
 // 加载区域结点配置
 Config::load();

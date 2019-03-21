@@ -101,7 +101,7 @@ function get_pic($path = ''){
  * @return mixed
  * @throws Exception
  */
-function curl($url, $postFields){
+function curl($url, $postFields = array()){
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_FAILONERROR, false);

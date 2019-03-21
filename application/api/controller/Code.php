@@ -2,7 +2,7 @@
 
 namespace app\api\controller;
 
-use app\common\lib\Sms;
+use app\common\third\Sms;
 use app\common\model\VerifyCode;
 use app\common\third\Email;
 use app\common\model\User;

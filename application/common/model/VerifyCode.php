@@ -54,7 +54,7 @@ class VerifyCode extends Model
         try {
             $data['create_time'] = time();
             $data['ip'] = request()->ip();
-            $codeObj = self::getEffectiveCode($data['auth_type'], $data['mobile']);
+            $codeObj = self::getEffectiveCode($data['auth_type'], $data['targetno']);
             if ($codeObj){
                 $result = $codeObj->allowField(true)->save($data);
             } else{
