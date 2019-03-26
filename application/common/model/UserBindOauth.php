@@ -16,30 +16,25 @@ class UserBindOauth extends Model
 
     /**
      * 获取第三方绑定帐号
-     * @param $oauthInfo
-     * @param $type
-     * @return array|bool
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
      */
-    public static function getBindUser($oauthInfo, $type){
+    public static function getBindUser($oauthInfo, $type)
+    {
         $sn = $oauthInfo['oauth_sn'];
         $ouathObj = self::where(['oauth_sn' => $sn, 'type' => $type])->find();
         $result = [
             'userObj' => '',
             'oauth_id' => '',
         ];
-        if ($ouathObj){
-            if ($ouathObj->uid){
+        if ($ouathObj) {
+            if ($ouathObj->uid) {
                 $userObj = User::get($ouathObj->uid);
                 $userObj->save(['avatar' => $oauthInfo['avatar']]);
                 $result['userObj'] = $userObj;
-            } else{
+            } else {
                 $result['oauth_id'] = $ouathObj->oauth_id;
             }
             return $result;
-        } else{
+        } else {
             $ouathObj = new UserBindOauth([
                 'type' => $type,
                 'nickname' => $oauthInfo['nickname'],
@@ -52,7 +47,7 @@ class UserBindOauth extends Model
             ]);
 
             $fields = 'type,nickname,oauth_sn,openid,source,on_time,sex,avatar';
-            if ($ouathObj->allowField($fields)->save()){
+            if ($ouathObj->allowField($fields)->save()) {
                 $result['oauth_id'] = $ouathObj->oauth_id;
                 return $result;
             }

@@ -13,13 +13,9 @@ class QqLogin
 
     /**
      * 获取QQ帐号信息
-     * @param $accessToken
-     * @param $openid
-     * @param $appid
-     * @return mixed
-     * @throws \Exception
      */
-    public static function getUserInfo($accessToken, $openid, $appid){
+    public static function getUserInfo($accessToken, $openid, $appid)
+    {
         $params = [
             'access_token' => $accessToken,
             'openid' => $openid,
@@ -31,7 +27,7 @@ class QqLogin
         $url = self::SERVER_URL . $route . $paramsStr;
         $result = curl($url);
         $result = json_decode($result, true);
-        if ($result['errcode'] || $result['ret'] == '-22'){
+        if ($result['errcode'] || $result['ret'] == '-22') {
             render_json('授权失败', 0);
         }
         return $result;
@@ -42,9 +38,10 @@ class QqLogin
      * @param $params
      * @return bool|string
      */
-    public static function paramsToStr($params){
+    public static function paramsToStr($params)
+    {
         $result = '';
-        foreach ($params as $key => $vo){
+        foreach ($params as $key => $vo) {
             $result .= "$key=" . $vo . "&";
         }
         $result = substr($result, 0, -1);

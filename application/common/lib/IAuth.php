@@ -15,7 +15,8 @@ class IAuth
      * @param array $data
      * @return string
      */
-    public static function setSign($data = array()){
+    public static function setSign($data = array())
+    {
         // 1、按字段排序
         ksort($data);
         // 2、拼接成字符串数据
@@ -31,14 +32,15 @@ class IAuth
      * @param $data
      * @return bool
      */
-    public static function checkSignPass($data){
+    public static function checkSignPass($data)
+    {
         $str = (new Aes())->decrypt($data['sign']);
-        if (empty($str)){
+        if (empty($str)) {
             return false;
         }
         // 将拼接的字符串解析出来
         parse_str($str, $arr);
-        if (!is_array($arr) || empty($arr['app-ver']) || $arr['app-ver'] != $data['app-ver']){
+        if (!is_array($arr) || empty($arr['app-ver']) || $arr['app-ver'] != $data['app-ver']) {
             return false;
         }
 

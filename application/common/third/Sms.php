@@ -27,7 +27,8 @@ class Sms
     /**
      * 发送短信
      */
-    public static function sendSms($mobile, $code, $template_code){
+    public static function sendSms($mobile, $code, $template_code)
+    {
         set_time_limit(0);
         header('Content-Type: text/plain; charset=utf-8');
         // 初始化SendSmsRequest实例用于设置发送短信的参数
@@ -56,7 +57,8 @@ class Sms
      * 取得AcsClient
      * @return DefaultAcsClient
      */
-    public static function getAcsClient() {
+    public static function getAcsClient()
+    {
         //产品名称:云通信流量服务API产品,开发者无需替换
         $product = "Dysmsapi";
         //产品域名,开发者无需替换
@@ -69,7 +71,7 @@ class Sms
         // 服务结点
         $endPointName = "cn-hangzhou";
 
-        if(static::$acsClient == null) {
+        if (static::$acsClient == null) {
             //初始化acsClient,暂不支持region化
             $profile = DefaultProfile::getProfile($region, $accessKeyId, $accessKeySecret);
             // 增加服务结点

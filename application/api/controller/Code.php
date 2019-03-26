@@ -27,31 +27,32 @@ class Code extends BaseController
     protected static $allowAuthType = ['register_mobile', 'login_mobile', 'find_password_mobile', 'bind_mobile', 'bind_email', 'change_mobile'];
 
 
-    public function sendCode(){
+    public function sendCode()
+    {
         $data = input('post.');
         $authType = $data['type'];
         $account = $data['account'];
 
-        if (!in_array($authType, self::$allowAuthType)){
+        if (!in_array($authType, self::$allowAuthType)) {
             render_json('验证码类型错误', 0);
         }
-        if ($authType != 'bind_email' && !check_mobile($account)){
+        if ($authType != 'bind_email' && !check_mobile($account)) {
             render_json('请输入正确的手机号码', 0);
         }
-        if ($authType == 'bind_email' && !check_email($account)){
+        if ($authType == 'bind_email' && !check_email($account)) {
             render_json('请输入正确的邮箱格式', 0);
         }
 
         // 检测同一手机号验证码发送频率
         $effectiveCode = VerifyCode::getEffectiveCode($authType, $account);
-        if ($effectiveCode && (time() - $effectiveCode->create_time) < config('api.sms_code_send_frequency')){
+        if ($effectiveCode && (time() - $effectiveCode->create_time) < config('api.sms_code_send_frequency')) {
             render_json('频繁发送验证码，请稍后再试', 0);
         }
 
-        switch ($authType){
+        switch ($authType) {
             //手机号码注册
             case 'register_mobile':
-                if (User::getByMobile($account)){
+                if (User::getByMobile($account)) {
                     render_json('该手机号已经被注册,请重新输入', 0);
                 }
                 break;
@@ -66,8 +67,8 @@ class Code extends BaseController
             case 'change_mobile':
             case 'bind_email':
                 $this->checkLogin();
-                $isExist = model('User')->where([['mobile|email','=',$account],['uid','<>',$this->uid]])->count();
-                if ($isExist){
+                $isExist = model('User')->where([['mobile|email', '=', $account], ['uid', '<>', $this->uid]])->count();
+                if ($isExist) {
                     render_json('该号码已经被绑定，请重新输入', 0);
                 }
                 break;
@@ -82,7 +83,7 @@ class Code extends BaseController
         }
 
         //smsType：阿里云短信设置
-        $smsType = config("sms.sms_code_$authType") ? : '';
+        $smsType = config("sms.sms_code_$authType") ?: '';
 
         //添加验证码记录
         $add = array();
@@ -92,25 +93,25 @@ class Code extends BaseController
         $add['code'] = VerifyCode::getCode();
         $code = VerifyCode::add($add);
 
-        if ($code){
+        if ($code) {
             $result = true;
-            if ($authType == 'bind_email'){
+            if ($authType == 'bind_email') {
                 //发送邮件
                 $subject = '邮箱绑定';
                 $content = '验证码：' . $add['code'];
                 $result = Email::send($account, $subject, $content);
-            } elseif(config('app.app_debug') == false){
+            } elseif (config('app.app_debug') == false) {
                 //正式环境-发送短信
                 $response = Sms::sendSms($account, $code, $smsType);
                 $result = $response->Code == 'OK' ? true : false;
             }
 
-            if ($result){
+            if ($result) {
                 render_json('发送成功', 1);
-            } else{
+            } else {
                 render_json('发送失败', 0);
             }
-        } else{
+        } else {
             render_json('发送失败', 0);
         }
     }

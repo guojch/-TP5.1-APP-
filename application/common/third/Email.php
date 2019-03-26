@@ -25,30 +25,31 @@ class Email
      * @return bool
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public static function send($to, $subject, $content){
-        include_once Env::get('root_path').'vendor/phpmailer/phpmailer/src/PHPMailer.php';
-        include_once Env::get('root_path').'vendor/phpmailer/phpmailer/src/SMTP.php';
+    public static function send($to, $subject, $content)
+    {
+        include_once Env::get('root_path') . 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
+        include_once Env::get('root_path') . 'vendor/phpmailer/phpmailer/src/SMTP.php';
         $mail = new PHPMailer();
-        $mail->SMTPDebug  = 0;
+        $mail->SMTPDebug = 0;
         $mail->isSMTP();
-        $mail->SMTPAuth   = true;
-        $mail->Host       = self::EMAIL_HOST;
+        $mail->SMTPAuth = true;
+        $mail->Host = self::EMAIL_HOST;
         $mail->SMTPSecure = 'ssl';
-        $mail->Port       = 465;
-        $mail->Hostname   = '';
-        $mail->CharSet    = 'UTF-8';
-        $mail->Fromname   = self::EMAIL_FROMNAME;
-        $mail->Username   = self::EMAIL_USERNAME;
-        $mail->Password   = self::EMAIL_PASSWORD;
-        $mail->From       = self::EMAIL_USERNAME;
+        $mail->Port = 465;
+        $mail->Hostname = '';
+        $mail->CharSet = 'UTF-8';
+        $mail->Fromname = self::EMAIL_FROMNAME;
+        $mail->Username = self::EMAIL_USERNAME;
+        $mail->Password = self::EMAIL_PASSWORD;
+        $mail->From = self::EMAIL_USERNAME;
         $mail->isHTML(true);
         $mail->addAddress($to);
-        $mail->Subject    = $subject;
-        $mail->Body       = $content;
+        $mail->Subject = $subject;
+        $mail->Body = $content;
         try {
-            $status  = $mail->send();
+            $status = $mail->send();
             return $status;
-        } catch (Exception $e){
+        } catch (Exception $e) {
             return false;
         }
     }

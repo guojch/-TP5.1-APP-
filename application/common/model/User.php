@@ -26,7 +26,8 @@ class User extends Model
      * @param $data
      * @return bool|int|string
      */
-    public function smsRegister($data){
+    public function smsRegister($data)
+    {
         $data['sec_code'] = $this->setSalt();
         $data['password'] = $this->encryPassword(md5($data['password']), $data['sec_code']);
         $data['reg_time'] = time();
@@ -35,16 +36,16 @@ class User extends Model
         Db::startTrans();
         try {
             $user = User::getByMobile($data['mobile']);
-            if ($user){
+            if ($user) {
                 $uid = $user['uid'];
-            } else{
+            } else {
                 model('User')->allowField(true)->save($data);
                 $uid = model('User')->getLastInsID();
             }
 
             Db::commit();
             return $uid;
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             Db::rollback();
         }
         return false;
@@ -55,10 +56,11 @@ class User extends Model
      * @param int $length
      * @return string
      */
-    public function setSalt($length = 16){
+    public function setSalt($length = 16)
+    {
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
         $key = '';
-        for ($i = 0; $i < $length; $i++){
+        for ($i = 0; $i < $length; $i++) {
             $key .= $chars[mt_rand(0, strlen($chars) - 1)];
         }
 
@@ -71,7 +73,8 @@ class User extends Model
      * @param $secCode 安全码
      * @return string
      */
-    public function encryPassword($password, $secCode){
+    public function encryPassword($password, $secCode)
+    {
         $password = preg_match('/^\w{32}$/', $password) ? $password : md5(stripslashes($password));
 
         return md5($password . md5($secCode));
@@ -81,15 +84,16 @@ class User extends Model
      * 用户快速登录
      * @return bool
      */
-    public function loginFast(){
+    public function loginFast()
+    {
         $accessToken = UserLib::encodeToken($this->toArray());
         $this->access_token = $accessToken;
         $this->last_login_time = time();
         $this->last_login_ip = request()->ip();
 
-        if ($this->save()){
+        if ($this->save()) {
             return $accessToken;
-        } else{
+        } else {
             return false;
         }
     }
@@ -99,14 +103,15 @@ class User extends Model
      * @param $data
      * @return bool
      */
-    public function loginByAccount($data){
+    public function loginByAccount($data)
+    {
         $data['password'] = Encryption::decode($data['password']);
-        if ($this->verifyPassword($data['password'])){
+        if ($this->verifyPassword($data['password'])) {
             $accessToken = UserLib::encodeToken($this->toArray());
             $this->access_token = $accessToken;
             $this->last_login_time = time();
             $this->last_login_ip = request()->ip();
-            if ($this->save()){
+            if ($this->save()) {
                 return $accessToken;
             }
         }
@@ -118,11 +123,12 @@ class User extends Model
      * @param $password
      * @return bool
      */
-    public function changePassword($password){
+    public function changePassword($password)
+    {
         $newPassword = $this->encryPassword(md5($password), $this->sec_code);
-        if ($this->password == $newPassword){
+        if ($this->password == $newPassword) {
             render_json('不能与原密码相同', 0);
-        } else{
+        } else {
             $this->password = $newPassword;
             return $this->save();
         }
@@ -134,8 +140,9 @@ class User extends Model
      * @param $sec_code
      * @return bool
      */
-    public function verifyPassword($password){
-        if ($this->password == $this->encryPassword($password, $this->sec_code)){
+    public function verifyPassword($password)
+    {
+        if ($this->password == $this->encryPassword($password, $this->sec_code)) {
             return true;
         }
         return false;
@@ -145,7 +152,8 @@ class User extends Model
      * 退出登录
      * @return bool
      */
-    public function logout(){
+    public function logout()
+    {
         $this->access_token = '';
         return $this->save();
     }
@@ -155,8 +163,9 @@ class User extends Model
      * @param $data
      * @return mixed
      */
-    public function updateUserInfo($data){
-        if (!is_array($data)){
+    public function updateUserInfo($data)
+    {
+        if (!is_array($data)) {
             render_json('传递参数不合法', 0);
         }
         $this->allowField(true)->save($data);

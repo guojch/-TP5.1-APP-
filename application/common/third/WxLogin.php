@@ -18,7 +18,8 @@ class WxLogin
      * @return mixed
      * @throws \Exception
      */
-    public static function getUserInfo($accessToken, $openid){
+    public static function getUserInfo($accessToken, $openid)
+    {
         $params = [
             'access_token' => $accessToken,
             'openid' => $openid,
@@ -30,7 +31,7 @@ class WxLogin
         $url = self::SERVER_URL . $route . $paramsStr;
         $result = curl($url);
         $result = json_decode($result, true);
-        if ($result['errcode']){
+        if ($result['errcode']) {
             render_json('授权失败', 0);
         }
         return $result;
@@ -41,9 +42,10 @@ class WxLogin
      * @param $params
      * @return bool|string
      */
-    public static function paramsToStr($params){
+    public static function paramsToStr($params)
+    {
         $result = '';
-        foreach ($params as $key => $vo){
+        foreach ($params as $key => $vo) {
             $result .= "$key=" . $vo . "&";
         }
         $result = substr($result, 0, -1);

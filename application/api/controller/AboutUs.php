@@ -15,21 +15,24 @@ class AboutUs extends BaseController
     /**
      * 关于我们基础信息
      */
-    public function index(){
+    public function index()
+    {
         $data = array();
-        $data['telephone'] = model('BasicConfig')->where(['key'=>'telephone','type'=>'client'])->value('value') ? : '';
-        $data['company'] = model('BasicConfig')->where(['key'=>'company','type'=>'client'])->value('value') ? : '';
+        $data['telephone'] = model('BasicConfig')->where(['key' => 'telephone', 'type' => 'client'])->value('value') ?: '';
+        $data['company'] = model('BasicConfig')->where(['key' => 'company', 'type' => 'client'])->value('value') ?: '';
 
         render_json('获取成功', 1, $data);
     }
+
     /**
      * 意见反馈
      */
-    public function feedback(){
+    public function feedback()
+    {
         $this->checkLogin();
         $data = input('post.');
         $result = $this->validate($data, 'Feedback');
-        if ($result !== true){
+        if ($result !== true) {
             render_json($result, 0);
         }
         $arr = array(
@@ -40,7 +43,7 @@ class AboutUs extends BaseController
         );
         try {
             Feedback::create($arr);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             render_json('反馈失败', 0);
         }
         render_json('反馈成功', 1);

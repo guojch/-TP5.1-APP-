@@ -11,7 +11,7 @@ use think\Validate;
  */
 class UserRegister extends Validate
 {
-	protected $rule = [
+    protected $rule = [
         'mobile' => 'require|/^1[3456789]\d{9}$/',
         'code' => 'require',
         'password' => 'require|min:6|max:12|/^[0-9a-zA-Z_]{1,}$/',
