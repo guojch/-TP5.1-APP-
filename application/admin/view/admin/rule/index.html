@@ -1,0 +1,169 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>
+                权限列表
+            </h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-2">
+                        <div class="input-group">
+                            <a href="add">
+                                <button class="btn btn-outline btn-primary" type="button">
+                                    添加权限
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <form action="ruleorder" id="ruleorder" method="get" name="ruleorder">
+                        <table border="1" class="table table-bordered table-hover">
+                            <thead>
+                            <tr class="long-tr">
+                                <th width="6%">
+                                    ID
+                                </th>
+                                <th width="19%">
+                                    权限名称
+                                </th>
+                                <th width="15%">
+                                    节点
+                                </th>
+                                <th width="10%">
+                                    是否菜单
+                                </th>
+                                <th width="15%">
+                                    状态
+                                </th>
+                                <th width="10%">
+                                    添加时间
+                                </th>
+                                <th width="10%">
+                                    排序
+                                </th>
+                                <th width="20%">
+                                    操作
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {foreach name="admin_rule" item="v"}
+                            <tr class="long-td">
+                                <td>
+                                    {$v.id}
+                                </td>
+                                <td style='text-align:left;padding-left:{if condition="$v.leftpin neq 0"}{$v.leftpin}px{/if}'>
+                                    {$v.lefthtml}{$v.title}
+                                </td>
+                                <td>
+                                    {$v.name}
+                                </td>
+                                <td>
+                                    {if condition="$v.ismenu eq 1"}
+                                    <div>
+                                        <span class="label label-info">
+                                            是
+                                        </span>
+                                    </div>
+                                    {else/}
+                                    <div>
+                                        <span class="label label-danger">
+                                            否
+                                        </span>
+                                    </div>
+                                    {/if}
+                                </td>
+                                <td>
+                                    {if condition="$v.status eq 1"}
+                                    <a class="red" href="javascript:;" onclick="rule_state({$v.id});">
+                                        <div id="zt{$v.id}">
+                                            <span class="label label-info">
+                                                开启
+                                            </span>
+                                        </div>
+                                    </a>
+                                    {else/}
+                                    <a class="red" href="javascript:;" onclick="rule_state({$v.id});">
+                                        <div id="zt{$v.id}">
+                                            <span class="label label-danger">
+                                                禁用
+                                            </span>
+                                        </div>
+                                    </a>
+                                    {/if}
+                                </td>
+                                <td>
+                                    {:date('Y-m-d H:i:s',$v.create_time)}
+                                </td>
+                                <td style="padding: 3px">
+                                    {$v.weigh}
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary btn-outline btn-xs" href="edit?id={$v.id}">
+                                        <i class="fa fa-paste"></i>
+                                        查看
+                                    </a>
+                                    <a class="btn btn-danger btn-outline btn-xs" href="javascript:;" onclick="del_rule({$v.id})">
+                                        <i class="fa fa-trash-o"></i>
+                                        删除
+                                    </a>
+                                </td>
+                            </tr>
+                            {/foreach}
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{include file="public/footer" /}
+<script type="text/javascript">
+    /**
+     * 删除
+     */
+    function del_rule(id) {
+        if (confirm('确认删除?')) {
+            $.get('{:url("delete")}',
+                {'id': id},
+                function (res) {
+                    if (res.code == 1) {
+                        layer.msg(res.msg, {icon: 1, time: 1500, shade: 0.1});
+                        location.reload();
+                    } else {
+                        layer.msg(res.msg, {icon: 0, time: 1500, shade: 0.1});
+                    }
+                });
+        }
+    }
+
+    /**
+     * 开启与禁用
+     */
+    function rule_state(val) {
+        $.post('{:url("state")}',
+            {id: val},
+            function (data) {
+                if (data.code == 1) {
+                    var a = '<span class="label label-danger">禁用</span>'
+                    $('#zt' + val).html(a);
+                    layer.msg(data.msg, {icon: 0, time: 1500, shade: 0.1});
+                } else {
+                    var b = '<span class="label label-info">开启</span>'
+                    $('#zt' + val).html(b);
+                    layer.msg(data.msg, {icon: 1, time: 1500, shade: 0.1});
+                }
+            });
+        return false;
+    }
+</script>

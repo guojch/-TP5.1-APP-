@@ -1,0 +1,181 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox-title">
+        <h5>
+            管理员列表
+        </h5>
+    </div>
+    <div class="ibox-content">
+        <!--搜索框开始-->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="col-sm-2" style="width: 100px">
+                    <div class="input-group">
+                        <a href="{:url('add')}">
+                            <button class="btn btn-outline btn-primary" type="button">
+                                添加管理员
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <form action="" class="form-search" method="get" name="admin_list_sea">
+                    <div class="col-sm-3">
+                        <label style="float: left"></label>
+                        <div class="input-group">
+                            <input class="form-control" id="key" name="username" placeholder="请输入姓名" type="text" value="{$username}"/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-search"></i>搜索
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--搜索框结束-->
+        <div class="hr-line-dashed"></div>
+        <div class="example-wrap">
+            <div class="example">
+                <table border="1" class="table table-bordered table-hover">
+                    <thead>
+                    <tr class="long-tr">
+                        <th>
+                            管理员编号
+                        </th>
+                        <th>
+                            管理员姓名
+                        </th>
+                        <th>
+                            管理员邮箱
+                        </th>
+                        <th>
+                            头像
+                        </th>
+                        <th>
+                            角色名称
+                        </th>
+                        <th>
+                            上次登录ip
+                        </th>
+                        <th>
+                            上次登录时间
+                        </th>
+                        <th>
+                            状态
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                    </thead>
+                    {foreach $admins as $vo}
+                    <tr class="long-td">
+                        <td>
+                            {$vo.id}
+                        </td>
+                        <td>
+                            {$vo.username}
+                        </td>
+                        <td>
+                            {$vo.email}
+                        </td>
+                        <td>
+                            <img src="{$vo.avatar}" class="img-circle" style="width:35px;height:35px" onerror="this.src='/static/admin/images/head_default.gif'"/>
+                        </td>
+                        <td>
+                            {$vo->getGroupName()}
+                        </td>
+                        <td>
+                            {$vo.last_login_ip}
+                        </td>
+                        <td>
+                            {if !empty($vo.last_login_time)}
+                            {:date('Y-m-d H:i:s',$vo.last_login_time)}
+                            {/if}
+                        </td>
+                        <td>
+                            {if condition = "$vo.status==1"}
+                            <a class="red" href="javascript:;" onclick="user_state({$vo.id});">
+                                <div id="zt{$vo.id}">
+                                    <span class="label label-info">
+                                        开启
+                                    </span>
+                                </div>
+                            </a>
+                            {else}
+                            <a class="red" href="javascript:;" onclick="user_state({$vo.id});">
+                                <div id="zt{$vo.id}">
+                                    <span class="label label-danger">
+                                        禁用
+                                    </span>
+                                </div>
+                            </a>
+                            {/if}
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-xs btn-outline" href="edit?id={$vo.id}">
+                                <i class="fa fa-paste"></i>详情
+                            </a>
+                            <a class="btn btn-danger btn-outline btn-xs" href="javascript:;" onclick="userDel({$vo.id})">
+                                <i class="fa fa-trash-o"></i>删除
+                            </a>
+                        </td>
+                    </tr>
+                    {/foreach}
+                    <tbody id="list-content">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- End Example Pagination -->
+    </div>
+</div>
+<div style="text-align: center">
+    {$admins|raw}
+</div>
+
+</body>
+{include file="public/footer" /}
+<script type="text/javascript">
+    /**
+     * 删除
+     */
+    function userDel(id) {
+        if (confirm('确认删除此管理人员?')) {
+            $.get('{:url("delete")}',
+                {'id': id},
+                function (res) {
+                    if (res.code == 1) {
+                        layer.msg(res.msg, {icon: 1, time: 1500, shade: 0.1}, function () {
+                            location.reload();
+                        });
+                    } else {
+                        alert(res.msg)
+                        layer.msg(res.msg, {icon: 0, time: 1500, shade: 0.1});
+                    }
+                });
+        }
+    }
+    /**
+     * 启用与禁用
+     */
+    function user_state(val) {
+        $.post('{:url("state")}',
+            {id: val},
+            function (data) {
+                if (data.code == 1) {
+                    var a = '<span class="label label-danger">禁用</span>'
+                    $('#zt' + val).html(a);
+                    layer.msg(data.msg, {icon: 0, time: 1500, shade: 0.1});
+                } else {
+                    var b = '<span class="label label-info">开启</span>'
+                    $('#zt' + val).html(b);
+                    layer.msg(data.msg, {icon: 1, time: 1500, shade: 0.1});
+                }
+            });
+        return false;
+    }
+</script>
+</body>

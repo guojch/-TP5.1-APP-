@@ -1,5 +1,5 @@
 /**
-2018.11.30更新
+2019.3.26更新
  */
 
 -- ----------------------------
@@ -15,18 +15,18 @@ CREATE TABLE `basic_basic_config` (
   KEY `key` (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置表';
 -- ----------------------------
--- Records of basic2_basic_config
+-- Records of basic_basic_config
 -- ----------------------------
-INSERT INTO `basic2_basic_config` VALUES ('1', 'user_agreement', '\r\n用户（购买服务或商品）协议\r\n\r\n\r\n\r\n用户：指注册时同意本协议内容的人\r\n\r\n1.请您在使用“家通达”平台服务之前，务必认真阅读本“购买协议”（简称“本规则”），且充分理解各条款内容，特别是涉及免除或限制责任条款。当您进入“家通达”服务平台，接受或使用平台各项服务时，即表示您已知悉并同意本规则的全部内容，如您不同意本规则中任何一条款，应当立即停止使用。\r\n\r\n2.您必须具备完全行为能力才能使用平台服务。若您不具备前述行为能力，则您本人及您的监护人、代理人应依法承担因此导致的全部法律责任。\r\n\r\n3. 我们的平台：指“家通达”服务平台（以下简称“平台”），是由深圳市家通达电子商务有限公司开发并运行的，包括官网（http://www.jiatd.com）、手机APP、官方客服电话、第三方网页链接、微信、短消息等在内的综合信息平台，可以向用户提供相关的需求服务信息。\r\n\r\n4. 我们的服务：在我们的平台，用户可以实现提出和获取相关服务的需求信息，以及查询相关的订单记录、费用结算、评价等活动。\r\n\r\n5. 我们的用户：依法具有完全行为能力的自然人、法人或接受平台服务的用户。\r\n\r\n一、', 'client', '用户协议');
-INSERT INTO `basic2_basic_config` VALUES ('2', 'register_agreement', '\r\n用户（购买服务或商品）协议\r\n\r\n\r\n\r\n用户：指注册时同意本协议内容的人\r\n\r\n1.请您在使用“家通达”平台服务之前，务必认真阅读本“购买协议”（简称“本规则”），且充分理解各条款内容，特别是涉及免除或限制责任条款。当您进入“家通达”服务平台，接受或使用平台各项服务时，即表示您已知悉并同意本规则的全部内容，如您不同意本规则中任何一条款，应当立即停止使用。\r\n\r\n2.您必须具备完全行为能力才能使用平台服务。若您不具备前述行为能力，则您本人及您的监护人、代理人应依法承担因此导致的全部法律责任。\r\n\r\n3. 我们的平台：指“家通达”服务平台（以下简称“平台”），是由深圳市家通达电子商务有限公司开发并运行的，包括官网（http://www.jiatd.com）、手机APP、官方客服电话、第三方网页链接、微信、短消息等在内的综合信息平台，可以向用户提供相关的需求服务信息。\r\n\r\n4. 我们的服务：在我们的平台，用户可以实现提出和获取相关服务的需求信息，以及查询相关的订单记录、费用结算、评价等活动。\r\n\r\n5. 我们的用户：依法具有完全行为能力的自然人、法人或接受平台服务的用户。\r\n\r\n一、', 'client', '注册协议');
-INSERT INTO `basic2_basic_config` VALUES ('3', 'version', '1.0', 'version', '版本');
-INSERT INTO `basic2_basic_config` VALUES ('4', 'version_android', '2', 'version', 'android内部版本');
-INSERT INTO `basic2_basic_config` VALUES ('5', 'version_android_explain', '版本1', 'version', 'android版本说明');
-INSERT INTO `basic2_basic_config` VALUES ('6', 'version_android_url', 'http://renren.yxsoft.net/apk/Wandoujia_307595_web_direct_binded.apk', 'version', 'android下载地址');
-INSERT INTO `basic2_basic_config` VALUES ('7', 'version_ios', '1.0.0', 'version', 'ios版本');
-INSERT INTO `basic2_basic_config` VALUES ('8', 'version_ios_url', '', 'version', 'ios下载地址');
-INSERT INTO `basic2_basic_config` VALUES ('9', 'telephone', '13063054219', 'client', '客服电话');
-INSERT INTO `basic2_basic_config` VALUES ('10', 'company', '厦门xxxx公司', 'client', '公司名称');
+INSERT INTO `basic_basic_config` VALUES ('1', 'user_agreement', '\r\n用户（购买服务或商品）协议\r\n\r\n\r\n\r\n用户：指注册时同意本协议内容的人\r\n\r\n1.请您在使用“家通达”平台服务之前，务必认真阅读本“购买协议”（简称“本规则”），且充分理解各条款内容，特别是涉及免除或限制责任条款。当您进入“家通达”服务平台，接受或使用平台各项服务时，即表示您已知悉并同意本规则的全部内容，如您不同意本规则中任何一条款，应当立即停止使用。\r\n\r\n2.您必须具备完全行为能力才能使用平台服务。若您不具备前述行为能力，则您本人及您的监护人、代理人应依法承担因此导致的全部法律责任。\r\n\r\n3. 我们的平台：指“家通达”服务平台（以下简称“平台”），是由深圳市家通达电子商务有限公司开发并运行的，包括官网（http://www.jiatd.com）、手机APP、官方客服电话、第三方网页链接、微信、短消息等在内的综合信息平台，可以向用户提供相关的需求服务信息。\r\n\r\n4. 我们的服务：在我们的平台，用户可以实现提出和获取相关服务的需求信息，以及查询相关的订单记录、费用结算、评价等活动。\r\n\r\n5. 我们的用户：依法具有完全行为能力的自然人、法人或接受平台服务的用户。\r\n\r\n一、', 'client', '用户协议');
+INSERT INTO `basic_basic_config` VALUES ('2', 'register_agreement', '\r\n用户（购买服务或商品）协议\r\n\r\n\r\n\r\n用户：指注册时同意本协议内容的人\r\n\r\n1.请您在使用“家通达”平台服务之前，务必认真阅读本“购买协议”（简称“本规则”），且充分理解各条款内容，特别是涉及免除或限制责任条款。当您进入“家通达”服务平台，接受或使用平台各项服务时，即表示您已知悉并同意本规则的全部内容，如您不同意本规则中任何一条款，应当立即停止使用。\r\n\r\n2.您必须具备完全行为能力才能使用平台服务。若您不具备前述行为能力，则您本人及您的监护人、代理人应依法承担因此导致的全部法律责任。\r\n\r\n3. 我们的平台：指“家通达”服务平台（以下简称“平台”），是由深圳市家通达电子商务有限公司开发并运行的，包括官网（http://www.jiatd.com）、手机APP、官方客服电话、第三方网页链接、微信、短消息等在内的综合信息平台，可以向用户提供相关的需求服务信息。\r\n\r\n4. 我们的服务：在我们的平台，用户可以实现提出和获取相关服务的需求信息，以及查询相关的订单记录、费用结算、评价等活动。\r\n\r\n5. 我们的用户：依法具有完全行为能力的自然人、法人或接受平台服务的用户。\r\n\r\n一、', 'client', '注册协议');
+INSERT INTO `basic_basic_config` VALUES ('3', 'version', '1.0', 'version', '版本');
+INSERT INTO `basic_basic_config` VALUES ('4', 'version_android', '2', 'version', 'android内部版本');
+INSERT INTO `basic_basic_config` VALUES ('5', 'version_android_explain', '版本1', 'version', 'android版本说明');
+INSERT INTO `basic_basic_config` VALUES ('6', 'version_android_url', 'http://renren.yxsoft.net/apk/Wandoujia_307595_web_direct_binded.apk', 'version', 'android下载地址');
+INSERT INTO `basic_basic_config` VALUES ('7', 'version_ios', '1.0.0', 'version', 'ios版本');
+INSERT INTO `basic_basic_config` VALUES ('8', 'version_ios_url', '', 'version', 'ios下载地址');
+INSERT INTO `basic_basic_config` VALUES ('9', 'telephone', '13063054219', 'client', '客服电话');
+INSERT INTO `basic_basic_config` VALUES ('10', 'company', '厦门xxxx公司', 'client', '公司名称');
 
 -- ----------------------------
 -- Table structure for `basic_user`
@@ -128,3 +128,93 @@ CREATE TABLE `basic_verify_code` (
   PRIMARY KEY (`code_id`),
   KEY `targetno` (`targetno`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='验证码表';
+
+-- ----------------------------
+-- Table structure for `basic_admin`
+-- ----------------------------
+CREATE TABLE `basic_admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '员工编号',
+  `username` varchar(50) NOT NULL COMMENT '员工姓名',
+  `password` varchar(50) NOT NULL COMMENT '密码',
+  `avatar` varchar(200) NOT NULL COMMENT '头像',
+  `access_token` varchar(100) NOT NULL COMMENT 'token',
+  `group_id` int(11) NOT NULL DEFAULT '1' COMMENT '组别ID',
+  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '员工状态：1、正常',
+  `email` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '邮箱',
+  `mobile` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '手机号',
+  `last_login_ip` varchar(50) NOT NULL COMMENT '最后登录IP',
+  `last_login_time` int(11) NOT NULL DEFAULT '0' COMMENT '最后登录时间',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `basic_admin`(`id`, `username`, `password`, `access_token`) VALUES (1, 'admin', '218dbb225911693af03a713581a7227f', '1ac2fc424c64cdf80db98a246f439287');
+
+-- ----------------------------
+-- Table structure for `basic_admin_rule`
+-- ----------------------------
+CREATE TABLE `basic_admin_rule` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` enum('menu','file') NOT NULL DEFAULT 'file' COMMENT 'menu为菜单,file为权限节点',
+  `pid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父ID',
+  `name` varchar(100) NOT NULL DEFAULT '' COMMENT '规则名称',
+  `title` varchar(50) NOT NULL DEFAULT '' COMMENT '规则名称',
+  `icon` varchar(50) NOT NULL COMMENT '图标',
+  `remark` varchar(255) NOT NULL COMMENT '备注',
+  `ismenu` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否为菜单',
+  `weigh` int(10) NOT NULL DEFAULT '0' COMMENT '权重',
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (1, 'file', 0, '#', '管理员及权限', '', '', 1, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (2, 'file', 1, 'admin/admin/index', '管理员管理', '', '', 1, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (3, 'file', 1, 'admin/group/index', '权限管理', '', '', 1, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (4, 'file', 1, 'admin/rule/index', '菜单管理', '', '', 1, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (5, 'file', 2, 'admin/admin/add', '新增', '', '', 0, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (6, 'file', 2, 'admin/admin/edit', '编辑', '', '', 0, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (7, 'file', 2, 'admin/admin/delete', '删除', '', '', 0, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (8, 'file', 2, 'admin/admin/state', '更新管理员状态', '', '', 0, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (9, 'file', 2, 'admin/index/editpwd', '修改密码', '', '', 0, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (10, 'file', 3, 'admin/group/add', '新增', '', '', 0, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (11, 'file', 3, 'admin/group/edit', '编辑', '', '', 0, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (12, 'file', 3, 'admin/group/view', '查看', '', '', 0, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (13, 'file', 3, 'admin/group/delete', '删除', '', '', 0, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (14, 'file', 3, 'admin/group/giveAccess', '权限分配', '', '', 0, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (15, 'file', 3, 'admin/group/state', '权限状态变更', '', '', 0, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (16, 'file', 4, 'admin/rule/add', '新增', '', '', 0, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (17, 'file', 4, 'admin/rule/edit', '编辑', '', '', 0, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (18, 'file', 4, 'admin/rule/view', '查看', '', '', 0, 0, 1, 1553847125, 0, 0);
+INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `remark`, `ismenu`, `weigh`, `status`, `create_time`, `update_time`, `delete_time`) VALUES (19, 'file', 4, 'admin/rule/delete', '删除', '', '', 0, 0, 1, 1553847125, 0, 0);
+
+
+-- ----------------------------
+-- Table structure for `basic_admin_group`
+-- ----------------------------
+CREATE TABLE `basic_admin_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL COMMENT '标题',
+  `rules` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '规则',
+  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态，1：开启',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `basic_admin_group`(`id`, `title`, `rules`) VALUES (1, '超级管理员', '1,2,3,4,5');
+
+-- ----------------------------
+-- Table structure for `basic_admin_group_access`
+-- ----------------------------
+CREATE TABLE `basic_admin_group_access` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `group_id` int(11) NOT NULL COMMENT '组别ID',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `basic_admin_group_access`(`uid`, `group_id`) VALUES (1, 1);

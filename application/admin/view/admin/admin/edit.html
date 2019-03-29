@@ -1,0 +1,145 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>
+                        编辑管理员
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <form action="" class="form-horizontal" id="edit" method="post" name="edit" enctype="multipart/form-data">
+                        <input name="id" type="hidden" value="{$user.id}"/>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                用户名/账号：
+                            </label>
+                            <div class="input-group col-sm-4">
+                                <input class="form-control" id="username" name="username" value="{$user.username}" type="text" placeholder="请设置登录帐号"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                管理员角色：
+                            </label>
+                            <div class="input-group col-sm-4">
+                                <select class="form-control m-b chosen-select" id="groupid" name="group_id">
+                                    <option value="">
+                                        ==请选择角色==
+                                    </option>
+                                    {if !empty($role)}
+                                    {foreach name="role" item="vo"}
+                                    <option {if condition="$user['group_id'] eq $vo['id']" } selected {/if} value="{$vo.id}" >
+                                    {$vo.title}
+                                    </option>
+                                    {/foreach}
+                                    {/if}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                头像：
+                            </label>
+                            <div class="input-group col-sm-4">
+                                <div id="fileList" class="uploader-list" style="float:right"></div>
+                                <div id="imgPicker" style="float:left"><input type='file' name='avatar' value='选择头像'/></div>
+                                <img id="img_data" class="img-circle" height="80px" width="80px" style="float:left;margin-left: 50px;margin-top: -10px;" src="{$user.avatar}" onerror="this.src='/static/admin/images/head_default.gif'"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                登录密码：
+                            </label>
+                            <div class="input-group col-sm-4">
+                                <input class="form-control" id="password" name="password" placeholder="请设置登录密码" type="password" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                手机号码
+                            </label>
+                            <div class="input-group col-sm-4">
+                                <input class="form-control" id="mobile" name="mobile" type="text" value="{$user.mobile}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                邮箱帐号
+                            </label>
+                            <div class="input-group col-sm-4">
+                                <input class="form-control" id="email" name="email" type="email" value="{$user.email}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                状 态：
+                            </label>
+                            <div class="col-sm-6">
+                                <div class="radio i-checks">
+                                    <input {if condition="$user.status eq 1 " } checked="" {/if} name="status" type="radio" value="1" />
+                                    开启
+                                    <input {if condition="$user.status eq 0 " } checked="" {/if} name="status" type="radio" value="0" />
+                                    关闭
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-12 col-sm-offset-5">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>
+                                    保存
+                                </button>
+                                <a class="btn btn-danger" href="javascript:history.go(-1);">
+                                    <i class="fa fa-close"></i>
+                                    返回
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{include file="public/footer" /}
+<script type="text/javascript">
+    $(function () {
+        $('#edit').ajaxForm({
+            beforeSubmit: checkForm, // 此方法主要是提交前执行的方法，根据需要设置
+            success: complete, // 这是提交后的方法
+            dataType: 'json'
+        });
+        function checkForm() {
+            if ('' == $.trim($('#username').val())) {
+                layer.msg('用户名/账号不能为空', {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+            if ('' == $('#group_id').val()) {
+                layer.msg('请选择管理员角色', {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+        }
+        function complete(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg, {icon: 6, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                    window.location.href = "{:url('admin/Admin/index')}";
+                });
+            } else {
+                layer.msg(data.msg, {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+        }
+    });
+</script>

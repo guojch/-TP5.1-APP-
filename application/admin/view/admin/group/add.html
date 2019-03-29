@@ -1,0 +1,92 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>
+                        添加角色
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <form action="" class="form-horizontal" id="roleAdd" method="post" name="roleAdd" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                角色名称：
+                            </label>
+                            <div class="input-group col-sm-4">
+                                <input class="form-control" id="title" name="title" type="text" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                状 态：
+                            </label>
+                            <div class="col-sm-6">
+                                <div class="radio i-checks">
+                                    <div class="col-sm-2">
+                                        <input checked="" name="status" type="radio" value="1"/>
+                                        开启
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input name="status" type="radio" value="0"/>
+                                        关闭
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed">
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12 col-sm-offset-5">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>
+                                    保存
+                                </button>
+                                <a class="btn btn-danger" href="javascript:history.go(-1);">
+                                    <i class="fa fa-close"></i>
+                                    返回
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{include file="public/footer" /}
+<script type="text/javascript">
+    $(function () {
+        $('#roleAdd').ajaxForm({
+            beforeSubmit: checkForm, // 此方法主要是提交前执行的方法，根据需要设置
+            success: complete, // 这是提交后的方法
+            dataType: 'json'
+        });
+
+        function checkForm() {
+            if ('' == $.trim($('#title').val())) {
+                layer.msg('角色名称不能为空', {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+        }
+
+        function complete(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg, {icon: 6, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                    window.location.href = "{:url('admin/Group/index')}";
+                });
+            } else {
+                layer.msg(data.msg, {icon: 5, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+        }
+    });
+</script>

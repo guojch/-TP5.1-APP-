@@ -1,0 +1,128 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>
+                        编辑权限
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <form action="" class="form-horizontal m-t" id="edit_rule" method="post" name="edit_rule">
+                        <input name="id" type="hidden" value="{$menu.id}"/>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                所属父级：
+                            </label>
+                            <div class="input-group col-sm-4">
+                                <select class="form-control" name="pid">
+                                    <option value="0">
+                                        --默认顶级--
+                                    </option>
+                                    {foreach name="admin_rule" item="v"}
+                                    <option {if condition="$menu.pid eq $v.id" } selected="" {
+                                    /if} style="margin-left:55px;" value="{$v.id}" >
+                                    {$v.lefthtml}{$v.title}
+                                    </option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                菜单名称：
+                            </label>
+                            <div class="input-group col-sm-4">
+                                <input aria-required="true" class="form-control" id="title" name="title" required="" type="text" value="{$menu.title}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                节点：
+                            </label>
+                            <div class="input-group col-sm-4">
+                                <input class="form-control" id="name" name="name" placeholder="模块/控制器/方法" type="text" value="{$menu.name}"/>
+                                <span class="help-block m-b-none">
+                                    如：admin/user/adduser
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                样式名称：
+                            </label>
+                            <div class="input-group col-sm-4">
+                                <input class="form-control" id="icon" name="icon" placeholder="输入样式名称" type="text" value="{$menu.icon}"/>
+                                <span class="help-block m-b-none">
+                                    <a href="http://fontawesome.dashgame.com/" target="_black">
+                                        选择图标
+                                    </a>
+                                    如:fa fa-user
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                状 态：
+                            </label>
+                            <div class="col-sm-6">
+                                <div class="radio i-checks">
+                                    <div class="col-sm-2">
+                                        <input {if condition="$menu['status'] eq 1 " } checked="" {/if} name="status" type="radio" value="1" />
+                                        开启
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input {if condition="$menu['status'] eq 0 " } checked="" {/if} name="status" type="radio" value="0" />
+                                        关闭
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                菜 单：
+                            </label>
+                            <div class="col-sm-6">
+                                <div class="radio i-checks">
+                                    <div class="col-sm-2">
+                                        <input {if condition="$menu['ismenu'] eq 1 " } checked="" {/if} name="ismenu" type="radio" value="1" />
+                                        是
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input {if condition="$menu['ismenu'] eq 0 " } checked="" {/if} name="ismenu" type="radio" value="0" />
+                                        否
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                排序：
+                            </label>
+                            <div class="input-group col-sm-4">
+                                <input class="form-control" id="weigh" name="weigh" placeholder="输入排序" type="text" value="{$menu.weigh}"/>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-12 col-sm-offset-5">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>
+                                    保存
+                                </button>
+                                <a class="btn btn-danger" href="javascript:history.go(-1);">
+                                    <i class="fa fa-close"></i>
+                                    返回
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{include file="public/footer" /}

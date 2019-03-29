@@ -1,0 +1,127 @@
+{include file="public/header" /}
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="nav-close"><i class="fa fa-times-circle"></i>
+        </div>
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <span><img alt="image" class="img-circle" width="70px" height="70px" src="{$portrait}"
+                                   onerror="this.src='/static/admin/images/head_default.gif'"/></span>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear">
+                                <span class="block m-t-xs"><strong class="font-bold">{$username}</strong></span>
+                                <span class="text-muted text-xs block">{$rolename}<b class="caret"></b></span>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu animated  m-t-xs">
+                            <li><a class="J_menuItem" href="{:url('admin/index/editPwd')}">修改密码</a></li>
+                            <li><a href="javascript:;" id="cache">清除缓存</a></li>
+                            <li><a href="{:url('admin/login/loginOut')}">安全退出</a></li>
+                        </ul>
+                    </div>
+                    <div class="logo-element"></div>
+                </li>
+                {if !empty($menu)}
+                {foreach name="menu" item="vo"}
+                <li class="menu">
+                    <a href="{$vo.href}">
+                        <i class="{$vo.css}"></i>
+                        <span class="nav-label">{$vo.title}</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        {if !empty($vo['child'])}
+                        {foreach name="$vo['child']" item="v"}
+                        <li>
+                            <a class="J_menuItem" href="{$v.href}">{$v.title}</a>
+                        </li>
+                        {/foreach}
+                        {/if}
+                    </ul>
+                </li>
+                {/foreach}
+                {/if}
+            </ul>
+        </div>
+    </nav>
+    <!--左侧导航结束-->
+    <!--右侧部分开始-->
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <div class="row content-tabs">
+            <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i>
+            </button>
+            <nav class="page-tabs J_menuTabs">
+                <div class="page-tabs-content">
+                    <a href="javascript:;" class="active J_menuTab" data-id="index.html">首页</a>
+                </div>
+            </nav>
+            <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i></button>
+            <div class="btn-group roll-nav roll-right">
+                <button class="dropdown J_tabClose" data-toggle="dropdown">常用操作<span class="caret"></span></button>
+                <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                    <li class="J_tabFresh"><a>刷新</a></li>
+                    <li class="J_tabCloseAll"><a>关闭全部选项卡</a></li>
+                    <li class="J_tabCloseOther"><a>关闭其他选项卡</a></li>
+                </ul>
+            </div>
+            <a href="javascript:;" id="logout" class="roll-nav roll-right J_tabExit">
+                <i class="fa fa fa-sign-out"></i>退出
+            </a>
+        </div>
+        <div class="row J_mainContent" id="content-main">
+            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="{:url('Index/indexPage')}"
+                    frameborder="0" data-id="index.html" seamless></iframe>
+        </div>
+        <div class="footer">
+            <div class="pull-right">2019 {$title}管理系统 All Rights Reserved.</div>
+        </div>
+    </div>
+    <!--右侧部分结束-->
+</div>
+{include file="public/footer" /}
+<script src="__JS__/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="__JS__/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="__JS__/hplus.min.js?v=4.1.0"></script>
+<script src="__JS__/contabs.js"></script>
+<script src="__JS__/plugins/pace/pace.min.js"></script>
+<script type="text/javascript">
+    //退出登录
+    $(document).ready(function () {
+        $("#logout").click(function () {
+            layer.confirm('你确定要退出吗？', {icon: 3}, function (index) {
+                layer.close(index);
+                window.location.href = "{:url('admin/Login/loginOut')}";
+            });
+        });
+    });
+    //清除缓存
+    $(function () {
+        $("#cache").click(function () {
+            layer.confirm('你确定要清除缓存吗？', {icon: 3, title: '提示'}, function (index) {
+                $.getJSON("{:url('admin/index/clear')}", function (res) {
+                    if (res.code == 1) {
+                        layer.msg(res.msg, {icon: 1, time: 2000, shade: 0.1});
+                    } else {
+                        layer.msg(res.msg, {icon: 0, time: 2000, shade: 0.1});
+                    }
+                });
+                layer.close(index);
+            })
+        });
+    });
+</script>
+</body>
+</html>
