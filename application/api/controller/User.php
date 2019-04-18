@@ -275,9 +275,11 @@ class User extends BaseController
         $this->checkLogin();
         $uid = $this->uid;
         $data = input('post.');
-        $isExist = model('User')->where([['username', '=', $data['username']], ['uid', '<>', $uid]])->count();
-        if ($isExist) {
-            render_json('用户名已存在', 0);
+        if ($data['username']) {
+            $isExist = model('User')->where([['username', '=', $data['username']], ['uid', '<>', $uid]])->count();
+            if ($isExist) {
+                render_json('用户名已存在', 0);
+            }
         }
         //获取用户信息
         $userObj = UserModel::get($uid);

@@ -11,6 +11,8 @@ return [
     'aes_key' => 'lPwIYiE*ZO^V%1%x',
     'aes_hex_iv' => '00000000000000000000000000000000',
     'encryption_key' => 'eVPmlkRRX!dQENx6',
+    'signature_key' => 'yxsoft',
+    'signature' => '123456',//万能签名
     'upload_max_size' => 2 * 1024 * 1024,//上传文件大小限制
     'upload' => [
         'avatar' => '/uploads/avatar'

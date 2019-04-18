@@ -74,8 +74,9 @@ class Code extends BaseController
                 break;
             //手机号码绑定
             case 'bind_mobile':
-                //需求待明确
-                render_json('需求待明确', 0);
+                if (User::getByMobile($account)) {
+                    render_json('该手机号已经被注册', 1, ['status' => 10001]);
+                }
                 break;
             default:
                 render_json('验证码类型错误', 0);
@@ -106,7 +107,9 @@ class Code extends BaseController
                 $result = $response->Code == 'OK' ? true : false;
             }
 
-            if ($result) {
+            if ($result && $authType == 'bind_mobile') {
+                render_json('新手机号码，请前往设置登录密码', 1, ['status' => 10002]);
+            } elseif ($result) {
                 render_json('发送成功', 1);
             } else {
                 render_json('发送失败', 0);

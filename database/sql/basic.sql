@@ -33,24 +33,24 @@ INSERT INTO `basic_basic_config` VALUES ('10', 'company', '厦门xxxx公司', 'c
 -- ----------------------------
 CREATE TABLE `basic_user` (
   `uid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `username` varchar(50) NOT NULL COMMENT '用户名',
-  `password` varchar(50) NOT NULL COMMENT '密码',
-  `sec_code` varchar(50) NOT NULL COMMENT '安全码',
-  `access_token` varchar(100) NOT NULL COMMENT '登录Token',
-  `mobile` varchar(50) NOT NULL COMMENT '手机号码',
-  `email` varchar(50) NOT NULL COMMENT '邮箱',
+  `username` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名',
+  `password` varchar(50) NOT NULL DEFAULT '' COMMENT '密码',
+  `sec_code` varchar(50) NOT NULL DEFAULT '' COMMENT '安全码',
+  `access_token` varchar(100) NOT NULL DEFAULT '' COMMENT '登录Token',
+  `mobile` varchar(50) NOT NULL DEFAULT '' COMMENT '手机号码',
+  `email` varchar(50) NOT NULL DEFAULT '' COMMENT '邮箱',
   `avatar` text NOT NULL COMMENT '头像',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '用户状态 1：正常 0：封禁',
   `reg_time` int(11) NOT NULL DEFAULT '0' COMMENT '注册时间',
-  `reg_ip` varchar(20) NOT NULL COMMENT '注册IP',
+  `reg_ip` varchar(20) NOT NULL DEFAULT '' COMMENT '注册IP',
   `reg_channel` tinyint(4) NOT NULL DEFAULT '1' COMMENT '注册渠道：默认1-APP注册',
   `last_login_time` int(11) NOT NULL DEFAULT '0' COMMENT '最后登陆时间',
-  `last_login_ip` varchar(20) NOT NULL COMMENT '最后登录IP',
-  `qq` varchar(20) NOT NULL COMMENT 'QQ号码',
-  `weixin` varchar(20) NOT NULL COMMENT '微信账号',
-  `weibo` varchar(20) NOT NULL COMMENT '微博帐号',
-  `alipay` varchar(50) NOT NULL COMMENT '支付宝帐号',
-  `wxpay` varchar(50) NOT NULL COMMENT '微信支付帐号',
+  `last_login_ip` varchar(20) NOT NULL DEFAULT '' COMMENT '最后登录IP',
+  `qq` varchar(20) NOT NULL DEFAULT '' COMMENT 'QQ号码',
+  `weixin` varchar(20) NOT NULL DEFAULT '' COMMENT '微信账号',
+  `weibo` varchar(20) NOT NULL DEFAULT '' COMMENT '微博帐号',
+  `alipay` varchar(50) NOT NULL DEFAULT '' COMMENT '支付宝帐号',
+  `wxpay` varchar(50) NOT NULL DEFAULT '' COMMENT '微信支付帐号',
   `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
   PRIMARY KEY (`uid`),
   KEY `uid` (`uid`) USING BTREE,
@@ -79,11 +79,11 @@ CREATE TABLE `basic_feedback` (
 -- ----------------------------
 CREATE TABLE `basic_file` (
   `file_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '附件ID',
-  `file_name` varchar(200) NOT NULL COMMENT '文件原名',
-  `save_name` varchar(200) NOT NULL COMMENT '保存后文件名',
-  `ext` varchar(20) NOT NULL COMMENT '后缀类型',
-  `size` varchar(20) NOT NULL COMMENT '文件大小',
-  `bucket` varchar(20) NOT NULL COMMENT '存储空间',
+  `file_name` varchar(200) NOT NULL DEFAULT '' COMMENT '文件原名',
+  `save_name` varchar(200) NOT NULL DEFAULT '' COMMENT '保存后文件名',
+  `ext` varchar(20) NOT NULL DEFAULT '' COMMENT '后缀类型',
+  `size` varchar(20) NOT NULL DEFAULT '' COMMENT '文件大小',
+  `bucket` varchar(20) NOT NULL DEFAULT '' COMMENT '存储空间',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '文件状态 1-正常',
   `on_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
   `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
@@ -96,15 +96,15 @@ CREATE TABLE `basic_file` (
 CREATE TABLE `basic_user_bind_oauth` (
   `oauth_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `uid` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
-  `type` varchar(30) NOT NULL COMMENT '类型：qq、wechat、weibo',
-  `nickname` varchar(30) NOT NULL COMMENT '昵称',
-  `bind_mobile` varchar(30) NOT NULL COMMENT '绑定手机号',
-  `oauth_sn` varchar(100) NOT NULL COMMENT '第三方用户唯一标识',
-  `openid` varchar(100) NOT NULL COMMENT '微信/qq：open_id，微博：uid',
+  `type` varchar(30) NOT NULL DEFAULT '' COMMENT '类型：qq、wechat、weibo',
+  `nickname` varchar(30) NOT NULL DEFAULT '' COMMENT '昵称',
+  `bind_mobile` varchar(30) NOT NULL DEFAULT '' COMMENT '绑定手机号',
+  `oauth_sn` varchar(100) NOT NULL DEFAULT '' COMMENT '第三方用户唯一标识',
+  `openid` varchar(100) NOT NULL DEFAULT '' COMMENT '微信/qq：open_id，微博：uid',
   `on_time` int(11) NOT NULL DEFAULT '0' COMMENT '绑定时间',
-  `source` varchar(100) NOT NULL COMMENT '设备',
+  `source` varchar(100) NOT NULL DEFAULT '' COMMENT '设备',
   `sex` tinyint(1) NOT NULL DEFAULT '0' COMMENT '性别：0-未知，1-男，2-女',
-  `avatar` varchar(256) NOT NULL COMMENT '头像',
+  `avatar` varchar(256) NOT NULL DEFAULT '' COMMENT '头像',
   `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
   PRIMARY KEY (`oauth_id`),
   KEY `uid` (`uid`)
@@ -115,13 +115,13 @@ CREATE TABLE `basic_user_bind_oauth` (
 -- ----------------------------
 CREATE TABLE `basic_verify_code` (
   `code_id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` char(6) NOT NULL COMMENT '验证码',
-  `targetno` varchar(50) NOT NULL COMMENT '手机号码或者邮箱帐号',
+  `code` char(6) NOT NULL DEFAULT '' COMMENT '验证码',
+  `targetno` varchar(50) NOT NULL DEFAULT '' COMMENT '手机号码或者邮箱帐号',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态 0-未处理，1-验证通过，2-验证失败',
   `auth_time` int(11) NOT NULL DEFAULT '0' COMMENT '处理时间',
-  `auth_type` varchar(60) NOT NULL COMMENT 'register_mobile手机号码注册，login_mobile手机号码登录，find_password_mobile手机找回密码，bind_mobile绑定手机，bind_email绑定邮箱，change_mobile更换绑定手机号码',
+  `auth_type` varchar(60) NOT NULL DEFAULT '' COMMENT 'register_mobile手机号码注册，login_mobile手机号码登录，find_password_mobile手机找回密码，bind_mobile绑定手机，bind_email绑定邮箱，change_mobile更换绑定手机号码',
   `uid` int(11) NOT NULL DEFAULT '0' COMMENT '关联用户ID',
-  `ip` varchar(100) NOT NULL COMMENT 'IP',
+  `ip` varchar(100) NOT NULL DEFAULT '' COMMENT 'IP',
   `source` enum('web','app','wx_mini') NOT NULL DEFAULT 'app' COMMENT '来源设备',
   `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '生成时间',
   `send_time` int(11) NOT NULL DEFAULT '0' COMMENT '发送时间（以阿里云为准）',
@@ -134,15 +134,15 @@ CREATE TABLE `basic_verify_code` (
 -- ----------------------------
 CREATE TABLE `basic_admin` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '员工编号',
-  `username` varchar(50) NOT NULL COMMENT '员工姓名',
-  `password` varchar(50) NOT NULL COMMENT '密码',
-  `avatar` varchar(200) NOT NULL COMMENT '头像',
-  `access_token` varchar(100) NOT NULL COMMENT 'token',
+  `username` varchar(50) NOT NULL DEFAULT '' COMMENT '员工姓名',
+  `password` varchar(50) NOT NULL DEFAULT '' COMMENT '密码',
+  `avatar` varchar(200) NOT NULL DEFAULT '' COMMENT '头像',
+  `access_token` varchar(100) NOT NULL DEFAULT '' COMMENT 'token',
   `group_id` int(11) NOT NULL DEFAULT '1' COMMENT '组别ID',
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '员工状态：1、正常',
-  `email` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '邮箱',
-  `mobile` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '手机号',
-  `last_login_ip` varchar(50) NOT NULL COMMENT '最后登录IP',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '员工状态：1、正常',
+  `email` varchar(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '邮箱',
+  `mobile` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '手机号',
+  `last_login_ip` varchar(50) NOT NULL DEFAULT '' COMMENT '最后登录IP',
   `last_login_time` int(11) NOT NULL DEFAULT '0' COMMENT '最后登录时间',
   `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
@@ -161,8 +161,8 @@ CREATE TABLE `basic_admin_rule` (
   `pid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父ID',
   `name` varchar(100) NOT NULL DEFAULT '' COMMENT '规则名称',
   `title` varchar(50) NOT NULL DEFAULT '' COMMENT '规则名称',
-  `icon` varchar(50) NOT NULL COMMENT '图标',
-  `remark` varchar(255) NOT NULL COMMENT '备注',
+  `icon` varchar(50) NOT NULL DEFAULT '' COMMENT '图标',
+  `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
   `ismenu` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否为菜单',
   `weigh` int(10) NOT NULL DEFAULT '0' COMMENT '权重',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
@@ -198,9 +198,9 @@ INSERT INTO `basic_admin_rule`(`id`, `type`, `pid`, `name`, `title`, `icon`, `re
 -- ----------------------------
 CREATE TABLE `basic_admin_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) NOT NULL COMMENT '标题',
+  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '标题',
   `rules` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '规则',
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态，1：开启',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态，1：开启',
   `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`)
@@ -213,8 +213,122 @@ INSERT INTO `basic_admin_group`(`id`, `title`, `rules`) VALUES (1, '超级管理
 -- ----------------------------
 CREATE TABLE `basic_admin_group_access` (
   `uid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `group_id` int(11) NOT NULL COMMENT '组别ID',
+  `group_id` int(11) NOT NULL DEFAULT '0' COMMENT '组别ID',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `basic_admin_group_access`(`uid`, `group_id`) VALUES (1, 1);
+
+-- ----------------------------
+-- Table structure for `basic_order`
+-- ----------------------------
+CREATE TABLE `basic_order` (
+  `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '订单ID',
+  `order_name` varchar(150) NOT NULL DEFAULT '' COMMENT '订单名称',
+  `pay_type` enum('alipay','wxpay','balance') NOT NULL COMMENT '订单支付渠道：alipay-支付宝，wxpay-微信，balance-余额',
+  `obj_type` varchar(20) NOT NULL DEFAULT '' COMMENT '订单对象类型',
+  `obj_id` int(11) NOT NULL DEFAULT '0' COMMENT '订单对象ID',
+  `order_amount` decimal(20,2) NOT NULL DEFAULT '0.00' COMMENT '订单金额',
+  `order_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '订单状态：0-待支付，1-已支付',
+  `order_body` varchar(200) NOT NULL DEFAULT '' COMMENT '订单内容',
+  `order_uid` int(11) NOT NULL DEFAULT '0' COMMENT '订单用户ID',
+  `order_username` varchar(100) NOT NULL DEFAULT '' COMMENT '订单用户名称',
+  `currency` enum('CNY') NOT NULL DEFAULT 'CNY' COMMENT '订单货币',
+  `source` varchar(20) NOT NULL DEFAULT '' COMMENT '订单来源',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  PRIMARY KEY (`order_id`),
+  KEY `order_uid` (`order_uid`),
+  KEY `order_username` (`order_username`),
+  KEY `obj_type` (`obj_type`),
+  KEY `obj_id` (`obj_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
+
+-- ----------------------------
+-- Table structure for `basic_order_charge`
+-- ----------------------------
+CREATE TABLE `basic_order_charge` (
+  `charge_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '渠道订单ID',
+  `order_type` varchar(20) NOT NULL DEFAULT '' COMMENT '订单类型',
+  `pay_type` varchar(20) NOT NULL DEFAULT '' COMMENT '付款渠道：支付宝-alipay，微信-wxpay',
+  `order_id` int(11) NOT NULL DEFAULT '0' COMMENT '内部订单ID',
+  `obj_type` varchar(20) NOT NULL DEFAULT '' COMMENT '订单对象',
+  `obj_id` int(11) NOT NULL DEFAULT '0' COMMENT '订单对象ID',
+  `uid` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `username` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名',
+  `amount` decimal(20,2) NOT NULL DEFAULT '0.00' COMMENT '订单金额',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '订单状态：0-待支付，1-已支付',
+  `currency` enum('CNY') NOT NULL DEFAULT 'CNY' COMMENT '货币',
+  `out_trade_no` varchar(200) NOT NULL DEFAULT '' COMMENT '商户订单号',
+  `trade_no` varchar(200) NOT NULL DEFAULT '' COMMENT '交易流水号',
+  `trade_status` varchar(50) NOT NULL DEFAULT '' COMMENT '商家返回的交易状态',
+  `pay_time` int(11) NOT NULL DEFAULT '0' COMMENT '订单付款时间（渠道方回调成功时间）',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '订单创建时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '订单更新时间',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '订单删除时间',
+  PRIMARY KEY (`charge_id`),
+  KEY `order_type` (`order_type`),
+  KEY `order_id` (`order_id`),
+  KEY `obj_type` (`obj_type`),
+  KEY `obj_id` (`obj_id`),
+  KEY `uid` (`uid`),
+  KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='三方渠道订单表';
+
+-- ----------------------------
+-- Table structure for `basic_finance`
+-- ----------------------------
+CREATE TABLE `basic_finance` (
+  `fina_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '财务记录ID',
+  `fina_type` enum('in','out') NOT NULL COMMENT '财务进出方向：in，out',
+  `fina_action` varchar(30) NOT NULL DEFAULT '' COMMENT '财务操作',
+  `fina_cash` decimal(20,2) NOT NULL DEFAULT '0.00' COMMENT '交易金额',
+  `order_id` int(11) NOT NULL DEFAULT '0' COMMENT '订单ID',
+  `uid` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `username` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名称',
+  `obj_type` varchar(30) NOT NULL DEFAULT '' COMMENT '对象类型',
+  `obj_id` int(11) NOT NULL DEFAULT '0' COMMENT '对象ID',
+  `user_balance` decimal(20,2) NOT NULL DEFAULT '0.00' COMMENT '用户余额',
+  `desc` varchar(200) NOT NULL DEFAULT '' COMMENT '财务描述',
+  `currency` enum('CNY') NOT NULL DEFAULT 'CNY' COMMENT '币种',
+  `source` varchar(10) NOT NULL DEFAULT '' COMMENT '财务来源：web，ios，android',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  PRIMARY KEY (`fina_id`),
+  KEY `fina_type` (`fina_type`),
+  KEY `fina_action` (`fina_action`),
+  KEY `order_id` (`order_id`),
+  KEY `uid` (`uid`),
+  KEY `username` (`username`),
+  KEY `obj_type` (`obj_type`),
+  KEY `obj_id` (`obj_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户财务记录表';
+
+-- ----------------------------
+-- Table structure for `basic_finance_company`
+-- ----------------------------
+CREATE TABLE `basic_finance_company` (
+  `fina_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '公司财务记录ID',
+  `fina_type` enum('in','out') NOT NULL DEFAULT 'in' COMMENT '财务进出方向：in，out',
+  `fina_action` varchar(30) NOT NULL DEFAULT '' COMMENT '财务操作',
+  `fina_cash` decimal(20,2) NOT NULL DEFAULT '0.00' COMMENT '交易金额',
+  `order_id` int(11) NOT NULL DEFAULT '0' COMMENT '订单ID',
+  `uid` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `username` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名称',
+  `obj_type` varchar(30) NOT NULL DEFAULT '' COMMENT '对象类型',
+  `obj_id` int(11) NOT NULL DEFAULT '0' COMMENT '对象ID',
+  `desc` varchar(200) NOT NULL DEFAULT '' COMMENT '财务描述',
+  `currency` enum('CNY') NOT NULL DEFAULT 'CNY' COMMENT '币种',
+  `source` varchar(10) NOT NULL DEFAULT '' COMMENT '财务来源：web，ios，android',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  PRIMARY KEY (`fina_id`),
+  KEY `fina_type` (`fina_type`),
+  KEY `fina_action` (`fina_action`),
+  KEY `order_id` (`order_id`),
+  KEY `obj_type` (`obj_type`),
+  KEY `obj_id` (`obj_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公司财务记录表';
