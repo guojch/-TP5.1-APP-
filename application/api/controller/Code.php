@@ -52,6 +52,7 @@ class Code extends BaseController
         switch ($authType) {
             //手机号码注册
             case 'register_mobile':
+            case 'bind_mobile':
                 if (User::getByMobile($account)) {
                     render_json('该手机号已经被注册,请重新输入', 0);
                 }
@@ -70,12 +71,6 @@ class Code extends BaseController
                 $isExist = model('User')->where([['mobile|email', '=', $account], ['uid', '<>', $this->uid]])->count();
                 if ($isExist) {
                     render_json('该号码已经被绑定，请重新输入', 0);
-                }
-                break;
-            //手机号码绑定
-            case 'bind_mobile':
-                if (User::getByMobile($account)) {
-                    render_json('该手机号已经被注册', 1, ['status' => 10001]);
                 }
                 break;
             default:
@@ -107,9 +102,7 @@ class Code extends BaseController
                 $result = $response->Code == 'OK' ? true : false;
             }
 
-            if ($result && $authType == 'bind_mobile') {
-                render_json('新手机号码，请前往设置登录密码', 1, ['status' => 10002]);
-            } elseif ($result) {
+            if ($result) {
                 render_json('发送成功', 1);
             } else {
                 render_json('发送失败', 0);
